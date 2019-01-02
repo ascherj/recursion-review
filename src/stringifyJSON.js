@@ -16,9 +16,11 @@ var stringifyJSON = function(obj) {
   } else if (typeof obj === 'object' && obj !== null) {
     var result = [];
     for (var key in obj) {
-      var current = '';
-      current += '"' + key + '":' + stringifyJSON(obj[key]);
-      result.push(current);
+      if (!(typeof obj[key] === 'function' || obj[key] === undefined)) {
+        var current = '';
+        current += '"' + key + '":' + stringifyJSON(obj[key]);
+        result.push(current);
+      }
     }
     return '{' + result.join(',') + '}';
   }
